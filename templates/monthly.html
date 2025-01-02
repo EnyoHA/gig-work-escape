@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+     <title>Monthly Summary</title>
+ </head>
+ <body>
+     <h1>Monthly Summary for {{ month }}/{{ year }}</h1>
+     <h2>Total Income: ${{ total_income }}</h2>
+     <h2>Total Expenses: ${{ total_expenses }}</h2>
+     <h2>Remaining Balance: ${{ remaining_balance }}</h2>
+
+     <h3>Expenses</h3>
+     <ul>
+         {% for expense in expenses %}
+         <li>
+             {{ expense.description }} - ${{ expense.amount }} ({{ expense.date.strftime('%Y-%m-%d') }})
+         </li>
+         {% endfor %}
+     </ul>
+
+     <h3>Incomes</h3>
+     <ul>
+         {% for income in incomes %}
+         <li>
+             {{ income.description }} - ${{ income.amount }} ({{ income.date.strftime('%Y-%m-%d') }})
+         </li>
+         {% endfor %}
+     </ul>
+
+     <a href="/">Back to Homepage</a>
+ </body>
+ </html>

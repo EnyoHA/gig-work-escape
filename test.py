@@ -29,6 +29,10 @@ class Income(db.Model):
     def __repr__(self):
         return f"<Income {self.description}>"
 
+# Helper function to filter entries by month and year
+def get_monthly_data(model, year, month):
+    return model.query.filter(db.extract('year', model.date) == year, db.extract('month', model.date) == month).all()
+
 # Route for the homepage
 @app.route('/')
 def index():
@@ -38,6 +42,16 @@ def index():
     total_expenses = sum(expense.amount for expense in expenses)
     remaining_balance = total_income - total_expenses
     return render_template('index.html', expenses=expenses, incomes=incomes, total_income=total_income, total_expenses=total_expenses, remaining_balance=remaining_balance)
+
+# Route for monthly summary
+@app.route('/monthly/<int:year>/<int:month>')
+def monthly_summary(year, month):
+    expenses = get_monthly_data(Expense, year, month)
+    incomes = get_monthly_data(Income, year, month)
+    total_income = sum(income.amount for income in incomes)
+    total_expenses = sum(expense.amount for expense in expenses)
+    remaining_balance = total_income - total_expenses
+    return render_template('monthly.html', year=year, month=month, expenses=expenses, incomes=incomes, total_income=total_income, total_expenses=total_expenses, remaining_balance=remaining_balance)
 
 # Route for adding a new expense
 @app.route('/add_expense', methods=['POST'])

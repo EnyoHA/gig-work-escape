@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
  <html>
  <head>
      <title>Budget Tracker</title>
@@ -42,5 +42,12 @@
          </li>
          {% endfor %}
      </ul>
+
+     <h3>Monthly Summary</h3>
+     <form action="/monthly" method="GET">
+         <input type="number" name="year" placeholder="Year" required>
+         <input type="number" name="month" placeholder="Month" required>
+         <button type="submit">View Summary</button>
+     </form>
  </body>
  </html>
